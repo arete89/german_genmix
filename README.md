@@ -1,1 +1,1 @@
-# german_genmix
+# For Argus Coal Daily International

@@ -27,23 +27,27 @@ while begin_date < date.today():
         r = requests.get(url, headers=headers)
 
 
-        Date = r.json()[0]["xAxisValues"]
-        nuke = r.json()[2]["data"]
+        Date = [datetime.strptime(str(i), "%d.%m.%Y").strftime("%d/%m/%Y") for i in r.json()[0]["xAxisValues"]]
+        blan = r.json()[1]["data"]
+        hror = r.json()[3]["data"]
         biom = r.json()[4]["data"]
+        nuke = r.json()[2]["data"]
         lign = r.json()[5]["data"]
         coal = r.json()[6]["data"]
         oil = r.json()[7]["data"]
         gas = r.json()[8]["data"]
-        winf = r.json()[15]["data"]
-        wino = r.json()[16]["data"]
-        sola = r.json()[17]["data"]
-        load = r.json()[18]["data"]
+        othr = r.json()[12]["data"]
+        hwr = r.json()[10]["data"]
+        winf = r.json()[16]["data"]
+        wino = r.json()[17]["data"]
+        sola = r.json()[18]["data"]
+        load = r.json()[19]["data"]
 
         outputs.append(Date)
 
-        print(Date, nuke, biom, lign, coal, oil, gas, winf, wino, sola, load)
+        print(Date, blan, nuke, biom, lign, coal, oil, gas, winf, wino, sola, load)
 
-        df = pd.DataFrame(list(zip(Date, nuke, biom, lign, coal, oil, gas, winf, wino, sola, load)), columns=['Date', 'Nuclear', 'Biomass', 'Lignite', 'Coal-fired', 'Oil', 'Gas', 'Wind Offshore', 'Wind Onshore', 'Solar', 'Load'])
+        df = pd.DataFrame(list(zip(Date, blan, hror, biom, nuke, lign, coal, oil, gas, othr, hwr, winf, wino, sola, load)), columns=['Date', 'Import (-), Export (+)', 'Hydro Run-of-River', 'Biomass', 'Nuclear', 'Fossil Brown Coal', 'Fossil Hard Coal', 'Fossil Oil', 'Fossil Gas', 'Others', 'Hydro Water Reservoir', 'Wind Offshore', 'Wind Onshore', 'Solar', 'Load'])
         df = df.set_index('Date')
         df.to_csv('german_genmix_' + year + '_' + weeknum + '.csv')
 

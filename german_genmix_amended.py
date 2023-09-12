@@ -23,7 +23,9 @@ while begin_date < date.today():
 
     for item in weeknum:
         url = "https://energy-charts.info/charts/energy/data/de/day_week_" + year + "_" + weeknum + ".json"
+        #currently only getting public data - "_total.json" at the end if you want the total (public + industrial) data
         headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36'}
+         #replace with YOUR User-Agent!
         r = requests.get(url, headers=headers)
 
 
